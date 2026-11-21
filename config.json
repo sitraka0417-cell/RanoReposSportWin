@@ -1,0 +1,13 @@
+{
+  "repo": "sitraka0417-cell/RanoReposSportWin",
+  "authPage": "https://sitraka0417-cell.github.io/RanoReposSportWin/auth.html",
+  "downloadPage": "https://sitraka0417-cell.github.io/RanoReposSportWin/telecharger.html",
+  "firebase": {
+    "apiKey": "AIzaSyAJbVBf6lHLclqv3fbHXoMzCTqaoFG8_WE",
+    "authDomain": "ranorepo-sitraka.firebaseapp.com",
+    "projectId": "ranorepo-sitraka",
+    "storageBucket": "ranorepo-sitraka.firebasestorage.app",
+    "messagingSenderId": "13872997753",
+    "appId": "1:13872997753:android:84e5e9eb9f528c7e3c3ba8"
+  }
+}

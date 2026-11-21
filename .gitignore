@@ -1,0 +1,5 @@
+node_modules/
+release/
+renderer/app.bundle.js
+*.log
+.DS_Store

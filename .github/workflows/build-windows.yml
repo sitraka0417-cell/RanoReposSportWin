@@ -1,0 +1,53 @@
+name: Installateur Windows Rano Repos Sport
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Construire l'installateur
+        run: npm run dist
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Lire la version
+        id: v
+        shell: bash
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RanoReposSport-Windows-Setup
+          path: release/RanoReposSport-Setup.exe
+
+      - name: Publier la version (lien de téléchargement public)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.v.outputs.version }}
+          name: Rano & Repos & Sport ${{ steps.v.outputs.version }}
+          make_latest: true
+          files: release/RanoReposSport-Setup.exe
+          body: |
+            Installateur Windows de **Rano & Repos & Sport** (pauses, eau et sport).
+
+            1. Téléchargez `RanoReposSport-Setup.exe` et lancez-le.
+            2. Si Windows affiche « Windows a protégé votre ordinateur » : cliquez sur *Informations complémentaires*, puis *Exécuter quand même*.
+            3. Pour mettre à jour, lancez simplement le nouvel installateur : vos données sont conservées.
+
+            Lien direct : https://github.com/${{ github.repository }}/releases/latest/download/RanoReposSport-Setup.exe

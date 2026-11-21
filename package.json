@@ -1,0 +1,46 @@
+{
+  "name": "rano-repos-sport",
+  "version": "1.0.0",
+  "description": "Rano & Repos & Sport : pauses, hydratation et suivi du sport, synchronisés avec Google",
+  "author": "Sitraka Nambinintsoa",
+  "main": "main.js",
+  "scripts": {
+    "build:ui": "node scripts/build-ui.js",
+    "start": "npm run build:ui && electron .",
+    "dist": "npm run build:ui && electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.0",
+    "firebase": "^10.14.1"
+  },
+  "build": {
+    "appId": "mg.sitraka.ranorepossport",
+    "productName": "Rano Repos Sport",
+    "executableName": "RanoReposSport",
+    "copyright": "© 2026 Sitraka Nambinintsoa",
+    "directories": { "output": "release", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "config.json", "renderer/**/*", "assets/**/*"],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico",
+      "artifactName": "RanoReposSport-Setup.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Rano Repos Sport",
+      "uninstallDisplayName": "Rano Repos Sport",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true,
+      "language": "1036"
+    }
+  }
+}

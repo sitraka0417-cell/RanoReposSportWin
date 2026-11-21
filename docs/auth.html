@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Connexion · Rano &amp; Repos &amp; Sport</title>
+  <link rel="icon" href="icon.png">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+      background: #0A1020; color: #E8EEF9; font: 16px/1.5 "Segoe UI", system-ui, sans-serif; }
+    .box { width: min(420px, 100%); text-align: center; background: #111A2E; border: 1px solid #26334F; border-radius: 26px; padding: 32px 26px; }
+    img { width: 72px; height: 72px; border-radius: 18px; }
+    h1 { font-size: 22px; margin: 14px 0 6px; }
+    p { margin: 6px 0; color: #A9B6D0; }
+    button { margin-top: 18px; width: 100%; min-height: 50px; border: 0; border-radius: 16px; font: 700 16px inherit; cursor: pointer;
+      background: linear-gradient(90deg, #4DB6FF, #2EE6B6); color: #00263F; }
+    button:disabled { opacity: .5; cursor: wait; }
+    #msg { min-height: 24px; margin-top: 14px; font-weight: 600; }
+    .err { color: #FF6B6B; }
+    .ok { color: #2EE6B6; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <img src="icon.png" alt="">
+    <h1>Rano &amp; Repos &amp; Sport</h1>
+    <p>Connectez-vous avec votre compte Google pour synchroniser vos données avec l'application Windows.</p>
+    <button id="go" type="button">Continuer avec Google</button>
+    <div id="msg" role="status"></div>
+    <p style="font-size:13px">Cette page est ouverte par l'application. Vous pourrez la fermer ensuite.</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+
+    const msg = document.getElementById('msg');
+    const btn = document.getElementById('go');
+    const show = (t, cls) => { msg.textContent = t; msg.className = cls || ''; };
+
+    const params = new URLSearchParams(location.hash.slice(1));
+    const port = params.get('port') || '';
+    const state = params.get('state') || '';
+    let cfg = null;
+    try {
+      const b64 = (params.get('cfg') || '').replace(/-/g, '+').replace(/_/g, '/');
+      cfg = JSON.parse(atob(b64 + '==='.slice((b64.length + 3) % 4)));
+    } catch (e) { cfg = null; }
+
+    const valid = /^\d{2,5}$/.test(port) && /^[a-f0-9]{16,64}$/.test(state) && cfg && cfg.apiKey && cfg.projectId;
+    if (!valid) {
+      btn.disabled = true;
+      show('Ouvrez cette page depuis l\'application Rano & Repos & Sport (Réglages → Se connecter avec Google).', 'err');
+    }
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      show('Connexion en cours…');
+      try {
+        const auth = getAuth(initializeApp(cfg));
+        const result = await signInWithPopup(auth, new GoogleAuthProvider());
+        const cred = GoogleAuthProvider.credentialFromResult(result);
+        if (!cred || (!cred.idToken && !cred.accessToken)) throw new Error('Aucun jeton reçu de Google.');
+        show('Connexion réussie. Retour à l\'application…', 'ok');
+        const q = new URLSearchParams({ state, idToken: cred.idToken || '', accessToken: cred.accessToken || '' });
+        location.replace('http://127.0.0.1:' + port + '/cb?' + q.toString());
+      } catch (e) {
+        btn.disabled = false;
+        const code = (e && e.code) || '';
+        const text = code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request' ? 'Connexion annulée. Vous pouvez réessayer.'
+          : code === 'auth/unauthorized-domain' ? 'Domaine non autorisé : ajoutez ' + location.hostname + ' dans Firebase → Authentication → Paramètres → Domaines autorisés.'
+          : code === 'auth/popup-blocked' ? 'Le navigateur a bloqué la fenêtre. Autorisez les pop-ups pour cette page puis réessayez.'
+          : 'Échec de la connexion : ' + ((e && e.message) || 'erreur inconnue');
+        show(text, 'err');
+      }
+    });
+  </script>
+</body>
+</html>

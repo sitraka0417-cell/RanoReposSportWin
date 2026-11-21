@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rano &amp; Repos &amp; Sport pour Windows : téléchargement</title>
+  <meta name="description" content="Application Windows gratuite : pauses régulières, rappels pour boire de l'eau et suivi du sport, synchronisés avec votre compte Google.">
+  <meta property="og:title" content="Rano & Repos & Sport pour Windows">
+  <meta property="og:description" content="Pauses, hydratation et sport : un seul logiciel gratuit pour Windows.">
+  <meta property="og:image" content="icon.png">
+  <link rel="icon" href="icon.png">
+  <style>
+    :root { --bg: #0A1020; --surface: #111A2E; --surface2: #1B2742; --on: #E8EEF9; --on2: #A9B6D0; --line: #26334F;
+      --primary: #4DB6FF; --secondary: #2EE6B6; --tertiary: #FFB74D; --on-primary: #00263F; color-scheme: dark; }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #F3F6FC; --surface: #FFFFFF; --surface2: #E6ECF8; --on: #0F1A2E; --on2: #55627D; --line: #D9E1F1;
+        --primary: #0A74D9; --secondary: #00A884; --tertiary: #F08A00; --on-primary: #FFFFFF; color-scheme: light; }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--on); font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif; }
+    a { color: var(--primary); }
+    .wrap { width: min(1040px, 100% - 32px); margin: 0 auto; }
+    header.top { padding: 18px 0; }
+    header.top .wrap { display: flex; align-items: center; gap: 12px; }
+    header.top img { width: 40px; height: 40px; border-radius: 11px; }
+    header.top b { font-size: 17px; }
+
+    .hero { text-align: center; padding: 36px 0 28px; }
+    .hero img.logo { width: 112px; height: 112px; border-radius: 28px; box-shadow: 0 18px 50px rgba(77, 182, 255, .25); }
+    h1 { font-size: clamp(28px, 5vw, 46px); line-height: 1.15; margin: 22px 0 12px; letter-spacing: -.02em; }
+    .lead { color: var(--on2); font-size: clamp(16px, 2.2vw, 19px); max-width: 640px; margin: 0 auto; }
+    .cta { margin-top: 28px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 30px; border-radius: 18px;
+      font-weight: 800; font-size: 18px; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: var(--on-primary); box-shadow: 0 12px 30px rgba(46, 230, 182, .25); }
+    .btn.primary:hover { filter: brightness(1.06); }
+    .btn.ghost { background: transparent; color: var(--on); border: 1px solid var(--line); min-height: 44px; font-size: 15px; padding: 0 20px; border-radius: 14px; }
+    .meta { color: var(--on2); font-size: 14px; min-height: 22px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; }
+    .badge { padding: 5px 12px; border-radius: 999px; background: var(--surface2); font-size: 13px; color: var(--on2); }
+
+    section.block { padding: 26px 0; }
+    h2 { font-size: clamp(22px, 3vw, 28px); margin: 0 0 16px; letter-spacing: -.01em; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+    .card h3 { margin: 0 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--on2); }
+    .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; margin-bottom: 12px;
+      background: color-mix(in srgb, var(--primary) 16%, transparent); }
+    ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 14px; }
+    ol.steps li { counter-increment: s; display: flex; gap: 14px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; }
+    ol.steps li::before { content: counter(s); flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--on-primary); }
+    .note { margin-top: 14px; padding: 14px 18px; border-radius: 16px; background: color-mix(in srgb, var(--tertiary) 12%, transparent); border: 1px solid color-mix(in srgb, var(--tertiary) 45%, transparent); }
+
+    .share { display: grid; gap: 14px; }
+    .copyrow { display: flex; gap: 8px; }
+    .copyrow input { flex: 1 1 auto; min-width: 0; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface2); color: var(--on); font: 14px ui-monospace, Consolas, monospace; }
+    .copyrow button { flex: none; }
+    .share-label { font-weight: 700; margin-bottom: 6px; display: block; }
+    .share-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--on); color: var(--bg); padding: 10px 18px; border-radius: 14px; font-weight: 700; opacity: 0; transition: opacity .25s; pointer-events: none; }
+    .toast.on { opacity: 1; }
+    details { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 700; }
+    details p { margin: 10px 0 0; color: var(--on2); }
+    footer { padding: 30px 0 46px; text-align: center; color: var(--on2); font-size: 14px; }
+    @media (max-width: 520px) { .copyrow { flex-direction: column; } .btn { width: 100%; } }
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap"><img src="icon.png" alt=""><b>Rano &amp; Repos &amp; Sport</b></div></header>
+
+  <main class="wrap">
+    <section class="hero">
+      <img class="logo" src="icon.png" alt="Logo de Rano &amp; Repos &amp; Sport">
+      <h1>Pauses, eau et sport,<br>sur votre ordinateur Windows</h1>
+      <p class="lead">Un logiciel gratuit qui vous rappelle de faire une pause, de boire de l'eau et de bouger, avec le suivi de vos progrès. Synchronisé avec l'application Android.</p>
+      <div class="cta">
+        <a id="dl" class="btn primary" href="#" rel="noopener">⬇ Télécharger pour Windows</a>
+        <div id="meta" class="meta">Windows 10 et 11 · 64 bits · gratuit</div>
+        <div class="badges"><span class="badge">Sans publicité</span><span class="badge">Rappels en arrière-plan</span><span class="badge">Données protégeables par code PIN</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Ce que vous obtenez</h2>
+      <div class="grid">
+        <div class="card"><div class="ico">⏱</div><h3>Repos</h3><p>Durées de pause au choix, cycle automatique travail / repos avec alarme et historique par jour, semaine, mois et année.</p></div>
+        <div class="card"><div class="ico">💧</div><h3>Eau</h3><p>Objectif de verres par jour, taille du verre réglable et rappels automatiques après chaque verre.</p></div>
+        <div class="card"><div class="ico">🏃</div><h3>Sport</h3><p>Objectif hebdomadaire (150 min par défaut), chronomètre ou compte à rebours, répartition par jour et série de jours actifs.</p></div>
+        <div class="card"><div class="ico">☁</div><h3>Synchronisation</h3><p>Connexion avec Google pour retrouver vos données sur Windows et Android.</p></div>
+        <div class="card"><div class="ico">🔔</div><h3>Toujours à l'heure</h3><p>L'application reste dans la zone de notification et vous prévient même quand la fenêtre est fermée.</p></div>
+        <div class="card"><div class="ico">🔒</div><h3>Sécurité</h3><p>Verrouillage par code PIN, verrouillage automatique et exportation de vos données.</p></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Installation en 3 étapes</h2>
+      <ol class="steps">
+        <li><div><b>Téléchargez</b> le fichier <code>RanoReposSport-Setup.exe</code> avec le bouton ci-dessus.</div></li>
+        <li><div><b>Lancez-le</b> et suivez l'assistant d'installation (quelques secondes).</div></li>
+        <li><div><b>Ouvrez</b> « Rano Repos Sport » depuis le bureau ou le menu Démarrer.</div></li>
+      </ol>
+      <div class="note"><b>Message de Windows ?</b> Si « Windows a protégé votre ordinateur » s'affiche, cliquez sur <b>Informations complémentaires</b>, puis sur <b>Exécuter quand même</b>. Cela arrive avec les logiciels qui ne sont pas encore signés numériquement.</div>
+    </section>
+
+    <section class="block">
+      <h2>Partager le logiciel</h2>
+      <div class="card share">
+        <div>
+          <span class="share-label">Lien de téléchargement direct</span>
+          <div class="copyrow"><input id="directLink" readonly aria-label="Lien de téléchargement direct"><button class="btn ghost" type="button" data-copy="directLink">Copier</button></div>
+        </div>
+        <div>
+          <span class="share-label">Lien de cette page</span>
+          <div class="copyrow"><input id="pageLink" readonly aria-label="Lien de la page"><button class="btn ghost" type="button" data-copy="pageLink">Copier</button></div>
+        </div>
+        <div class="share-btns">
+          <a class="btn ghost" id="shWa" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn ghost" id="shFb" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn ghost" id="shMail">E-mail</a>
+          <button class="btn ghost" id="shNative" type="button" hidden>Partager…</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Questions fréquentes</h2>
+      <details><summary>Le logiciel est-il gratuit ?</summary><p>Oui, entièrement gratuit et sans publicité.</p></details>
+      <details><summary>Comment mettre à jour ?</summary><p>Téléchargez à nouveau le fichier d'installation et lancez-le : vos données sont conservées. Dans les réglages, « Vérifier les mises à jour » indique si une nouvelle version existe.</p></details>
+      <details><summary>Où sont mes données ?</summary><p>Sur votre ordinateur, et dans votre compte Google si vous vous connectez (même compte que l'application Android). Vous pouvez aussi les exporter en JSON.</p></details>
+      <details><summary>Comment désinstaller ?</summary><p>Paramètres Windows → Applications → Rano Repos Sport → Désinstaller.</p></details>
+      <details><summary>Les rappels fonctionnent-ils si je ferme la fenêtre ?</summary><p>Oui, l'application continue dans la zone de notification (près de l'horloge). Faites un clic droit sur son icône puis « Quitter » pour l'arrêter complètement.</p></details>
+    </section>
+  </main>
+
+  <footer><div class="wrap">© 2026 Sitraka Nambinintsoa · <a id="relLink" href="#" rel="noopener">Toutes les versions</a></div></footer>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script>
+    (function () {
+      var REPO = 'sitraka0417-cell/RanoReposSportWin';
+      var FILE = 'RanoReposSport-Setup.exe';
+      var DIRECT = 'https://github.com/' + REPO + '/releases/latest/download/' + FILE;
+      var PAGE = location.href.split('#')[0];
+      var $ = function (id) { return document.getElementById(id); };
+
+      $('dl').href = DIRECT;
+      $('relLink').href = 'https://github.com/' + REPO + '/releases';
+      $('directLink').value = DIRECT;
+      $('pageLink').value = PAGE;
+
+      var text = 'Rano & Repos & Sport : pauses, eau et sport pour Windows. Téléchargement gratuit : ';
+      $('shWa').href = 'https://wa.me/?text=' + encodeURIComponent(text + PAGE);
+      $('shFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(PAGE);
+      $('shMail').href = 'mailto:?subject=' + encodeURIComponent('Rano & Repos & Sport pour Windows') + '&body=' + encodeURIComponent(text + PAGE);
+      if (navigator.share) {
+        $('shNative').hidden = false;
+        $('shNative').addEventListener('click', function () {
+          navigator.share({ title: 'Rano & Repos & Sport', text: text, url: PAGE }).catch(function () {});
+        });
+      }
+
+      var toastTimer;
+      function toast(t) {
+        var el = $('toast');
+        el.textContent = t;
+        el.classList.add('on');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { el.classList.remove('on'); }, 2200);
+      }
+      document.querySelectorAll('[data-copy]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var input = $(b.getAttribute('data-copy'));
+          var done = function () { toast('Lien copié'); };
+          if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(input.value).then(done, function () { input.select(); document.execCommand('copy'); done(); });
+          else { input.select(); document.execCommand('copy'); done(); }
+        });
+      });
+
+      // Version, taille et date de la dernière publication
+      fetch('https://api.github.com/repos/' + REPO + '/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (j) {
+          var a = (j.assets || []).filter(function (x) { return x.name === FILE; })[0];
+          var parts = ['Version ' + String(j.tag_name || '').replace(/^v/i, '')];
+          if (a && a.size) parts.push((a.size / 1048576).toFixed(0) + ' Mo');
+          if (j.published_at) parts.push(new Date(j.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }));
+          parts.push('Windows 10 et 11 · 64 bits');
+          $('meta').textContent = parts.join(' · ');
+          if (a && a.browser_download_url) { $('dl').href = a.browser_download_url; }
+        })
+        .catch(function () { /* le lien direct reste valable */ });
+    })();
+  </script>
+</body>
+</html>
